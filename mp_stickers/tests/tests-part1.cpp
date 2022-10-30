@@ -1,8 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "Image.h"
-#include "cs225/PNG.h"
-#include "cs225/HSLAPixel.h"
+#include "/workspaces/cs225/mp_stickers/src/Image.h"
+#include "/workspaces/cs225/mp_stickers/lib/cs225/PNG.h"
+#include "/workspaces/cs225/mp_stickers/lib/cs225/HSLAPixel.h"
 
 using namespace cs225;
 

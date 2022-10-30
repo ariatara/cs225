@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include "Image.h"
-#include "StickerSheet.h"
-#include "cs225/PNG.h"
-#include "cs225/HSLAPixel.h"
+#include "/workspaces/cs225/mp_stickers/src/Image.h"
+#include "/workspaces/cs225/mp_stickers/src/StickerSheet.h"
+#include "/workspaces/cs225/mp_stickers/lib/cs225/PNG.h"
+#include "/workspaces/cs225/mp_stickers/lib/cs225/HSLAPixel.h"
 
 using namespace cs225;
 
@@ -28,7 +28,7 @@ TEST_CASE("A basic StickerSheet works", "[weight=5][part=2][timeout=30000][valgr
   expected.readFromFile("../tests/expected.png");
 
   REQUIRE( sheet.render() == expected );
-}
+} 
 
 
 TEST_CASE("StickerSheet::changeMaxStickers() does not discard stickers when resized larger", "[weight=1][part=2][timeout=30000][valgrind]") {
@@ -264,7 +264,7 @@ TEST_CASE("StickerSheet's assignment operator makes an independent copy", "[weig
 
   REQUIRE( s1.render() == expected2 );
   REQUIRE( s2.render() == expected );
-}
+} 
 
 
 //
@@ -276,11 +276,11 @@ TEST_CASE("A Stickersheet with stickers placed beyond base image boundaries work
 
   StickerSheet sheet(alma, 5);
 
-  /**
-   * For testing deep copy of base image
-   * The {...} are used for a block statement
-   * and are intentional
-   */
+  
+    /*For testing deep copy of base image
+    The {...} are used for a block statement
+    and are intentional */
+
   {
     Image almaDuplicate = alma;
 

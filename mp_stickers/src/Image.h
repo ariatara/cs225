@@ -6,8 +6,8 @@
 #pragma once
 
 #include <string>
-#include "/workspaces/cs225/mp_stickers/lib/cs225/PNG.h"
-#include "/workspaces/cs225/mp_stickers/lib/cs225/HSLAPixel.h"
+#include "../lib/cs225/PNG.h"
+#include "../lib/cs225/HSLAPixel.h"
 
 using namespace cs225;
 

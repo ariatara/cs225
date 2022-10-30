@@ -4,7 +4,7 @@
  */
 #pragma once
 
-#include "/workspaces/cs225/mp_stickers/src/Image.h"
+#include "Image.h"
 #include <vector>
 
 class StickerSheet {

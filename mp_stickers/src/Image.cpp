@@ -1,11 +1,11 @@
 #include <cmath>
-#include "mp_stickers/src/Image.h"
+#include "Image.h"
 
 using namespace cs225;
 
 void Image::lighten() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.l += 0.1;
             if (pixel.l > 1) {
@@ -16,8 +16,8 @@ void Image::lighten() {
 }
 
 void Image::lighten(double amount) {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.l += amount;
             if (pixel.l > 1) {
@@ -28,8 +28,8 @@ void Image::lighten(double amount) {
 }
 
 void Image::darken() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.l -= 0.1;
             if (pixel.l < 0) {
@@ -40,8 +40,8 @@ void Image::darken() {
 }
 
 void Image::darken(double amount) {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.l -= amount;
             if (pixel.l < 0) {
@@ -52,8 +52,8 @@ void Image::darken(double amount) {
 }
 
 void Image::saturate() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.s += 0.1;
             if (pixel.s > 1) {
@@ -64,8 +64,8 @@ void Image::saturate() {
 }
 
 void Image::saturate(double amount) {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.s += amount;
             if (pixel.s > 1) {
@@ -76,8 +76,8 @@ void Image::saturate(double amount) {
 }
 
 void Image::desaturate() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.s -= 0.1;
             if (pixel.s < 0) {
@@ -88,8 +88,8 @@ void Image::desaturate() {
 }
 
 void Image::desaturate(double amount) {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.s -= amount;
             if (pixel.s < 0) {
@@ -100,8 +100,8 @@ void Image::desaturate(double amount) {
 }
 
 void Image::grayscale() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             pixel.s -= 0;
         }
@@ -109,17 +109,22 @@ void Image::grayscale() {
 }
 
 void Image::rotateColor(double degrees) {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
-            pixel.h = fmod((pixel.h + degrees), 360);
+            pixel.h += degrees;
+            if (pixel.h > 360) {
+                pixel.h -= 360;
+            } else if (pixel.h < 0) {
+                pixel.h += 360;
+            }
         }
     }
 }
 
 void Image::illinify() {
-    for (int w = 0; w < this->width(); w++) {
-        for (int h = 0; h < this->height(); h++) {
+    for (unsigned int w = 0; w < this->width(); w++) {
+        for (unsigned int h = 0; h < this->height(); h++) {
             HSLAPixel& pixel = this->getPixel(w, h);
             if (pixel.h > 113 && pixel.h < 294) {
                 pixel.h = 216;
@@ -140,58 +145,43 @@ void Image::scale(double factor) {
 
     PNG* img = new PNG(newWidth, newHeight);
 
-    for (int w = 0; w < newWidth; w++) {
-        for (int h = 0; h < newHeight; h++) {
-            img->PNG::getPixel(w, h).h = this->PNG::getPixel(w / factor, h / factor).h;
-            img->PNG::getPixel(w, h).s = this->PNG::getPixel(w / factor, h / factor).s;
-            img->PNG::getPixel(w, h).l = this->PNG::getPixel(w / factor, h / factor).l;
-            img->PNG::getPixel(w, h).a = this->PNG::getPixel(w / factor, h / factor).a;
+    for (unsigned int w = 0; w < newWidth; w++) {
+        for (unsigned int h = 0; h < newHeight; h++) {
+            img->PNG::getPixel(w, h).h = this->PNG::getPixel(floor(w / factor), floor(h / factor)).h;
+            img->PNG::getPixel(w, h).s = this->PNG::getPixel(floor(w / factor), floor(h / factor)).s;
+            img->PNG::getPixel(w, h).l = this->PNG::getPixel(floor(w / factor), floor(h / factor)).l;
+            img->PNG::getPixel(w, h).a = this->PNG::getPixel(floor(w / factor), floor(h / factor)).a;
         }
     }
 
     this->resize(newWidth, newHeight);
 
-    for (int w = 0; w < newWidth; w++) {
-        for (int h = 0; h < newHeight; h++) {
+    for (unsigned int w = 0; w < newWidth; w++) {
+        for (unsigned int h = 0; h < newHeight; h++) {
             this->PNG::getPixel(w, h).h = img->PNG::getPixel(w, h).h;
             this->PNG::getPixel(w, h).s = img->PNG::getPixel(w, h).s;
             this->PNG::getPixel(w, h).l = img->PNG::getPixel(w, h).l;
             this->PNG::getPixel(w, h).a = img->PNG::getPixel(w, h).a;
         }
     }
+
+    delete img;
+    img = nullptr;
 
 }
 
 void Image::scale(unsigned width, unsigned height) {
-    unsigned int widthFactor = width / this->width();
-    unsigned int heightFactor = height / this->height();
-    unsigned int factor;
-
-    if (widthFactor > heightFactor) {
-        factor = heightFactor;
-    } else {
-        factor = widthFactor;
-    }
+    double widthFactor = ((double) width) / ((double) this->width());
+    double heightFactor = ((double) height) / ((double) this->height());
 
     PNG* img = new PNG(width, height);
 
-    for (int w = 0; w < width; w++) {
-        for (int h = 0; h < height; h++) {
-            img->PNG::getPixel(w, h).h = this->PNG::getPixel(w / factor, h / factor).h;
-            img->PNG::getPixel(w, h).s = this->PNG::getPixel(w / factor, h / factor).s;
-            img->PNG::getPixel(w, h).l = this->PNG::getPixel(w / factor, h / factor).l;
-            img->PNG::getPixel(w, h).a = this->PNG::getPixel(w / factor, h / factor).a;
-        }
+    if (widthFactor <= heightFactor) {
+        scale(widthFactor);
+    } else {
+        scale(heightFactor);
     }
 
-    this->resize(width, height);
-
-    for (int w = 0; w < width; w++) {
-        for (int h = 0; h < height; h++) {
-            this->PNG::getPixel(w, h).h = img->PNG::getPixel(w, h).h;
-            this->PNG::getPixel(w, h).s = img->PNG::getPixel(w, h).s;
-            this->PNG::getPixel(w, h).l = img->PNG::getPixel(w, h).l;
-            this->PNG::getPixel(w, h).a = img->PNG::getPixel(w, h).a;
-        }
-    }
+    delete img;
+    img = nullptr;
 }

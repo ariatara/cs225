@@ -1,4 +1,4 @@
-#include "Image.h"
+#include "/workspaces/cs225/mp_stickers/src/Image.h"
 
 #include <iostream>
 
