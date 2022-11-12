@@ -150,14 +150,12 @@ void heap<T, Compare>::updateElem(const size_t & idx, const T& elem)
 {
     // @TODO In-place updates the value stored in the heap array at idx
     // Corrects the heap to remain as a valid heap even after update
-    size_t updateIdx = idx + root();
+    _elems[idx] = elem;
 
-    _elems[updateIdx] = elem;
-
-    if (higherPriority(elem, _elems[parent(updateIdx)])) {
-        heapifyUp(updateIdx);
+    if (higherPriority(elem, _elems[parent(idx)])) {
+        heapifyUp(idx);
     } else {
-        heapifyDown(updateIdx);
+        heapifyDown(idx);
     }
     
 }
